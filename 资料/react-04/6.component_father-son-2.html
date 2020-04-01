@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+<style>
+    .panel button{
+       margin: 0px 5px;
+   }
+</style>
+
+<body>
+    <p>父组件可以利用ref对子组件进行标记。这样的话就可以在父组件里调用子组件的方法</p>
+    <div id="app">
+    </div>
+
+
+
+
+    <script type="text/babel">
+        //在react中依然存在ref，可以为子组件做标记，也可以为组件内的dom元素做标记
+        //通过this.refs.son来获取子组件或者dom结构
+
+
+
+        //ref可以支持传入一个函数，函数的参数就是当前组件、dom元素，通过this绑定到父组件上面去(推荐)
+        //react在销毁组件的时候会帮助我们清空掉ref的相关引用，这样可以防止内存泄漏等一系列问题
+        var Father = React.createClass({
+            kickSon(){
+                //希望儿子调用自己更改状态的方法
+                //this.refs.son.changeDoing();
+                this.son.changeDoing();
+            },
+            render(){
+                return (
+                    <div>
+                        <p>这是一个父组件 <button onClick={this.kickSon}>给儿子一脚</button></p>
+                        <hr/>
+                        <Son ref={el=>this.son=el}/>
+                    </div>
+                )
+            }
+        })
+
+        var Son = React.createClass({
+            getInitialState(){
+                return {
+                    doing:"玩游戏"
+                }
+            },
+            changeDoing(){
+                this.setState({
+                    doing:"学习"
+                });
+            },
+            render(){
+                return (
+                    <div>
+                        <p>我是子组件 {this.state.doing}</p>
+                    </div>
+                )
+            }
+        });
+        ReactDOM.render(<Father/>,document.getElementById("app"))
+
+        
+    </script>
+</body>
+
+</html>

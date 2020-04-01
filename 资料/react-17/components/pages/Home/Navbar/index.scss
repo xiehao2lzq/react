@@ -1,0 +1,23 @@
+.home-navbar{
+    height:.82rem;
+    line-height: .82rem;
+    .swiper-slide{
+        width:auto;
+        padding:0 .2rem;
+        position: relative;
+        &.active:after{
+            content:"";
+            width:0.6rem;
+            height:.06rem;
+            background:rgb(248, 161, 32) ;
+            position: absolute;
+            bottom:0;
+            // left:50%;
+            // margin-left:-0.3rem;
+            left:0;
+            right:0;
+            margin-left:auto;
+            margin-right:auto;
+        }
+    }
+}

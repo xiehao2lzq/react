@@ -1,0 +1,9 @@
+.calculator{
+    display: flex;
+    .expression{
+        display: flex;
+        .btn-default{
+            margin:0 10px;
+        }
+    }
+}

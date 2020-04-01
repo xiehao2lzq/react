@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+<style>
+   
+</style>
+<body>
+    
+    <p>ReactDOM.unmountComponentAtNode(document.getElementById("app"))</p>
+    <hr>
+    <div id="app"></div>
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/babel">
+        //react销毁组件的时候，会将组件的dom结构也移除，
+        //vue则不然，在调用$destroy方法销毁组件的时候，组件的dom结构还是存在与页面中的
+        
+        var Hello = React.createClass({
+            destroy(){
+                //在某个节点上面销毁组件
+                ReactDOM.unmountComponentAtNode(document.getElementById("app"))
+            },
+            componentWillUnmount(){//销毁组件的生命周期钩子函数
+                console.log("componentWillUnmount")
+            },
+            render () {
+                return (
+                    <div>
+                        <button onClick={this.destroy}> destroy</button>
+                        <h1 >Hello World -  </h1>
+                    </div>
+                )
+            }
+        })
+
+        ReactDOM.render(<Hello/>,document.getElementById('app'))
+        
+
+        
+    </script>
+</body>
+</html>

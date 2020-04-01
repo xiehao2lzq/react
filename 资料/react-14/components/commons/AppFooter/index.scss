@@ -1,0 +1,22 @@
+.app-footer{
+    position: fixed;
+    width:100%;
+    height:1rem;
+    background: #e6dcde;
+    left:0;
+    bottom:0;
+    display: flex;
+    a{
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        &.actived{
+            color:#f9b145;
+        }
+        &>i{
+            font-size: 1.5em;
+        }
+    }
+}

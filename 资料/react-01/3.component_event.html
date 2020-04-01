@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+
+<style>
+
+</style> 
+
+<body>
+    <p>注意，在没有渲染的时候，页面中没有真实dom，所以是获取不到dom的</p>
+    <div id="hello"></div>
+
+    <script type="text/babel">
+        //组件没有渲染的时候，是获取不到它的dom结构的  
+        //组件内部dom元素添加事件的时候写小驼峰模式，值为一个函数体
+        var Hello = React.createClass({
+            clickme(){
+                console.log("clickme被调用了...")
+            },
+            render(){
+                return (
+                    <div>
+                        <p onClick={this.clickme}>我是hello组件-click</p>   
+                        <p onDoubleClick={this.clickme}>我是hello组件-double</p>   
+                        <p id="btn">之前的点击事件！</p>
+                        
+                    </div>
+                    
+                )
+            }
+        });
+
+        
+
+        ReactDOM.render(<Hello/>,hello)
+        // document.getElementById("btn").onclick = function(){
+        //     console.log("之前的点击btn的事件触发了...");
+        // }
+        
+
+        
+    </script>
+</body>
+
+</html>

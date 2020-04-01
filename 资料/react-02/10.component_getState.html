@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+<body>
+    <p>因为有些数据是只能自己设置和自己更改的，我们就把这些数据挂载到状态上，
+        getInitialState，组件内部通过this.state来获取</p>
+    <hr>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        //组件内部设置默认属性通过 getDefaultProps(){return {hairStyle:"shamate"}}
+        //react中组件不允许通过this.state这种方式直接更改组件的状态
+        //this.msg = "123"  vue中为什么可以这样做？
+       
+        var Gouzi = React.createClass({
+            getInitialState(){
+                return {
+                    doing:"学英语"
+                }
+            },
+            toggle(){
+                //进行自身状态的切换
+                // console.log(this.state.doing)
+                //this.state.doing = "玩游戏.."  //react中没有双向数据绑定？数据更改了，视图没有变化
+                //console.log(this.state.doing)
+             
+                this.setState({
+                    doing:this.state.doing==="学英语"?"玩游戏":"学英语"
+                });
+            },
+            render(){ 
+                return (
+                    <div>
+                        <p><button onClick={this.toggle}>toggle</button></p>
+                        <p>我正在 {this.state.doing}</p>
+                    </div>
+                )
+            }
+        });
+
+
+        ReactDOM.render(<Gouzi />,document.getElementById("app"))
+
+
+
+
+        // new Vue({
+        //     el:"",
+        //     data:{
+        //         msg:"hello"
+        //     },
+        //     methods:{
+        //         change(){
+        //             this.msg = "wanyouxi" //改数据
+        //         }
+        //     }
+        // });
+        
+    </script>
+</body>
+</html>

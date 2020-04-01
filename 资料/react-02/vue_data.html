@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <Hello></Hello>
+    </div>
+
+    <template id="hello">
+        <div class="hello">
+            <p><button @click="++num">点我</button></p>
+            <p>{{num}}</p>
+        </div>
+    </template>
+
+    <script>
+    
+        //响应式原理  mvvm
+        //在vue中，不管组件还是vue实例，数据都会被挂载到this.$data上面，对数据进行了处理
+        //内部通过Object.defineProperty()  为数据都绑定了getter与setter方法
+
+        //Object.defineProperty可以传入一个对象，为这个对象添加属性，并且这个属性上面具有getter与setter
+        //当我们设置数据的时候就会触发setter方法，当我们获取数据的时候，就会触发getter方法
+        //setter方法触发后，就会被vm里的对应的watcher监听到，创建新的虚拟dom,与上一次的虚拟dom进行比兑，进行真实dom的渲染
+
+
+        /* var obj = {};
+        var middle = 2;
+        Object.defineProperty(obj,"_num",{
+            get(){
+                return middle
+            },
+            set(val){
+                middle = val;
+            }
+        })
+        console.log(obj._num) //2
+        obj._num = 10;
+        console.log(obj._num) //10 */
+
+
+        Vue.component("Hello",{
+            template:"#hello",
+            data(){
+               return {
+                 num:0
+               } 
+            },
+            mounted(){
+                //console.log(this.$data)
+            }
+        }); 
+
+        new Vue({
+            el:"#app",
+            data:{}
+        });
+
+
+
+
+    </script>
+</body>
+</html>

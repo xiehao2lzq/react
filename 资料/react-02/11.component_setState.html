@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <script type="text/babel">
+        //在组件中，直接this.state.doing = 这样的方式更改状态是不生效的，
+        //在vue中，因为vue里对数据都做过处理了
+
+        //在react中，直接更改状态，组件不会知道状态发生改变，所以需要使用this.setState方法来更改
+        
+        //当我们执行setState 的时候，react就会马上去创建新的虚拟dom来做对比之后重新渲染  render重新执行
+
+        //在setState({})里直接传入一个对象，键值对上有什么，就改什么，这是同步更改状态的方法
+        //在setState((prevState,prevProps)=>{})中可以传入一个回调函数，这是异步的更改方法，在这个函数中返回一个键值对对象，
+        //和上面的一样，函数会接收两个参数，一个是当前的状态，一个是当前的属性
+        
+        var Gouzi = React.createClass({
+            getInitialState(){ //生命周期钩子函数
+                return {
+                    doing:"学英语"
+                }
+            },
+            changeState () {
+                //更改状态不要直接this.state.doing进行更改
+                //1.this.setState({}) //2s
+                //2.this.setState(()=>{})  异步更改
+                this.setState((prevState,prevProps)=>{
+                   return {
+                       doing:prevState.doing==="学"+prevProps.learn?"玩游戏":"学"+prevProps.learn
+                   }
+                });
+            },
+            render:function () {
+                return (
+                    <div>
+                        <button onClick={this.changeState}>点我</button>
+                        <p>我正在 {this.state.doing}</p>
+                    </div>
+                )
+            }
+        })
+
+        ReactDOM.render(<Gouzi learn="英语"/>,document.getElementById("app"))
+    </script>
+</body>
+
+</html>

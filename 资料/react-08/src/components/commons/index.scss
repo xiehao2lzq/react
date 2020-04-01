@@ -1,0 +1,14 @@
+.list-group-item{
+    &.finish{
+        span{
+            color:#ccc;
+            text-decoration:line-through;
+        }
+    }
+}
+
+.alert-info{
+    span{
+        margin-left:5px;
+    }
+}

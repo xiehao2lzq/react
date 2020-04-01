@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+<style>
+
+</style>
+
+<body>
+
+    <div id="app"></div>
+    <script type="text/babel">
+       var Father = React.createClass({
+           getInitialState(){
+                return {
+                    hit:0
+                }
+           },
+           hitSon(){
+               this.setState({
+                   hit:++this.state.hit
+               })
+           },
+           render(){ //状态改变的时候，render函数就会被重新执行！
+               return (
+                   <div>
+                        <p>我是father..</p> 
+                        <p><button onClick={this.hitSon}>打儿子</button></p>
+                        <Son hitnum={this.state.hit}/>
+                   </div>
+               )
+           }
+       });
+
+       var Son = React.createClass({
+           componentWillReceiveProps(props,state){ //参数是最新的属性与最新的状态
+               //这个钩子函数默认不会执行
+               //当属性变化的时候才会执行  0-0还是认为属性发生改变了
+               //this.props.hitnum拿到的是上一次的props
+               //可以用来更改状态，在这里更改状态，不会触发生命周期钩子函数重复执行
+               console.log("child-componentwillReceiveProps",props.hitnum)
+               if(props.hitnum>=5 && !state.pain){ //打五次，状态改变
+                this.setState({
+                    pain:true
+                })
+               }
+           },
+           getInitialState(){
+               return {
+                   pain:false
+               }
+           },
+           render(){ //因为son组件的属性hitnum发生变化，render函数也会重新执行
+                console.log("child-render")
+                let {pain} = this.state;
+                return (
+                    <div>
+                        <p>我是son</p>
+                        <p>挨打的次数为：{this.props.hitnum}</p>
+                        <p>我{pain || "不"}疼</p>
+                    </div>
+               )
+           }
+       })
+
+       ReactDOM.render(<Father/>,app)
+    </script>
+</body>
+
+</html>

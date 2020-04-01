@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+<style>
+    body {
+        height: 2000px;
+    }
+    #app {
+        position: fixed;
+    }
+   .world {
+       width: 100px;height: 100px;
+       border: 1px solid red;
+   }
+</style>
+<body>
+    <div id="app"></div>
+</body>
+<script type = "text/babel">
+    //当从渲染某组件变成了不渲染某组件，该组件就会经历销毁阶段  componentWillUnmount
+    var Hello = React.createClass({
+        getInitialState(){
+            return {
+                isShow:true
+            }
+        },
+        toggle(){
+            this.setState({
+                isShow: !this.state.isShow
+            });
+        },
+        render(){
+            let {isShow} = this.state;
+            return (
+                <div>
+                    <button onClick={this.toggle}>toggle</button>
+                    { !isShow || <World /> }
+                </div>
+            )
+        }
+    });
+
+    var World = React.createClass({
+        getRandomColor () {
+            return '#'+'0123456789abcdef'.split('').map(function(v,i,a){
+                return i>5 ? null : a[Math.floor(Math.random()*16)] }).join('');
+        },
+        getInitialState(){
+            return {
+                color:"red"
+            }
+        },
+        componentWillMount(){
+            //console.log("world-componentwillMount")
+            this.timer = setInterval(() => {
+                console.log("world-setinterval")
+                this.setState((prevState,pervProps)=>{
+                    return {
+                        color:this.getRandomColor()
+                    }
+                })
+            }, 500);
+        },
+        componentWillUnmount(){
+            //组件销毁的钩子函数  例如清除定时器、清除一些自定义事件的绑定
+            console.log("componentWillUnmount")
+            clearInterval(this.timer);
+        },
+        render(){
+            return (
+                <div style={{background:this.state.color}} className="world"></div>
+            )
+        },
+    });
+
+
+
+
+    ReactDOM.render(<Hello/>,document.getElementById('app'))
+
+    // getRandomColor () {
+    //     return '#'+'0123456789abcdef'.split('').map(function(v,i,a){
+    //         return i>5 ? null : a[Math.floor(Math.random()*16)] }).join('');
+    // }
+</script>
+
+</html>

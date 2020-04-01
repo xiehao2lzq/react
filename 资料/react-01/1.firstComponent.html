@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <div id="app2"></div>
+</body>
+<!-- 在这里，引入browser是为了在浏览器端编译jsx代码，但是这种方法不会应用到真实开发环境中，
+    因为这种方法降低了页面渲染速度 -->
+<!-- 在这里为了让browser进行编译，我们需要把script标签的type设置为text/babel -->
+<script type="text/babel">
+    //创建组件  构造器、类
+    var Hello = React.createClass({
+        render(){   //return返回jsx代码  javascript xml 只是借鉴了xml的一些语法糖  限制了只有一个根元素
+            return (
+                <div>
+                    <p>我是hello组件！</p>    
+                </div>
+            )
+        }
+    });
+
+    //利用ReactDOM对象的render方法将组件渲染到某个节点里
+    ReactDOM.render(<Hello/>,document.getElementById("app"));
+</script>
+
+
+
+
+</html>

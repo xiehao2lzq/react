@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+</head>
+<style>
+   .panel button{
+       margin: 0px 5px;
+   }
+   .list-group{
+       width: 40%;
+       float: left;
+   }
+</style>
+<body>
+
+    <div id="app" class="container"> 
+       <!-- <div class="panel panel-primary">
+           <div class="panel-heading">
+            <button class="btn btn-default">北京</button>
+           </div>
+           <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">111</li>
+            </ul>
+           </div>
+       </div> -->
+    </div> 
+    
+   
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/babel">
+       // http://api.douban.com/v2/movie/in_theaters
+       //列表循环渲染： 在jsx虚拟dom结构中，可以利用表达式放入一个数组，数组里的元素会输出到结构中，
+       //所以我们可以将需要渲染的虚拟dom结构放入到数组中
+       //存放数据的数组使用数组的map方法可以映射出一个存放虚拟dom结构的新的数组
+
+       //实现效果之后需要注意，当用户点击同一个城市按钮的时候，阻止MovieContent组件重新获取数据，因为这个时候接收到的城市其实是一样的
+       
+
+       const MovieBox = React.createClass({
+           getDefaultProps(){
+               return {
+                   citys:[
+                       {id:1,title:"北京"},
+                       {id:2,title:"上海"},
+                       {id:3,title:"深圳"},
+                       {id:4,title:"广州"},
+                       {id:5,title:"青岛"}
+                   ]
+               }
+           },
+           getInitialState(){
+               return {
+                   activited: this.props.citys[0].id
+               }
+           },
+        //    shouldComponentUpdate(props,state){
+        //     //    console.log(state.activited);
+        //        if(state.activited === this.state.activited){
+        //            return false
+        //        }
+        //        return true
+        //    },
+           changeActivedId(id){
+               let {activited} = this.state;
+               if(id===activited) return false;
+               this.setState({
+                   activited:id
+               })
+           },
+           renderCity(){
+               let {citys} = this.props;
+               let {activited} = this.state;
+               return citys.map(item=>{
+                   return (
+                        <button
+                            onClick={this.changeActivedId.bind(this,item.id)} 
+                            className={"btn "+(item.id===activited?'btn-danger':'btn-default')}
+                        >{item.title}</button>
+                   )
+               })
+           },
+           getCity(){
+               let {citys} = this.props;
+               let {activited} = this.state;
+               for(var i=0;i<citys.length;i++){
+                 if(citys[i].id === activited){
+                     return citys[i].title
+                 }
+               }
+           },
+           render(){
+               return (
+                    <div className="panel panel-primary">
+                        <div className="panel-heading">
+                            {this.renderCity()}
+                        </div>
+                        <MovieContent city={this.getCity()}/>
+                    </div>
+               )
+           }
+       });
+
+       //http://api.douban.com/v2/movie/top250
+       const MovieContent = React.createClass({
+           getInitialState(){
+               return {
+                   title:"",
+                   movies:null
+               }
+           },
+           componentWillReceiveProps(props,state){
+               //if(this.props.city === props.city) return false
+                this.getMovies(props.city); //props.city获取到最新的城市
+           },
+           componentDidMount(){
+               this.getMovies(this.props.city);
+           },
+           getMovies(city){
+                $.ajax({
+                    url:"http://api.douban.com/v2/movie/in_theaters",
+                    data:{
+                        city
+                    },
+                    dataType:"jsonp",
+                    success:(data)=>{
+                        console.log(data)
+                        this.setState({
+                            title:data.title,
+                            movies:data.subjects
+                        })
+                    }
+                });
+           },
+           renderMovie(){
+              let {movies}  = this.state;
+              if(!movies) return false;
+              return movies.map(item=>{
+                  return <li className="list-group-item">{item.title}</li>
+              })
+           },
+           render(){
+               return (
+                    <div className="panel-body">
+                        <p>当前城市为：{this.state.title}</p>
+                        <ul className="list-group">
+                            {this.renderMovie()}
+                        </ul>
+                    </div>
+               );
+           }
+       })
+        
+        
+
+
+     
+      ReactDOM.render(<MovieBox/>,document.getElementById('app'))
+    </script>
+</body>
+</html>

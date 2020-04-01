@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+<style>
+    .show{display: block;}
+    .hide{display: none;}
+</style>
+
+<body>
+    <p>页面不同显示还是需要有数据来控制</p>
+    <hr>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        //jsx代码最终会被编译成下面的代码
+        var Hello = React.createElement("div",{},[
+            React.createElement("h1",{id:"h1"},"我是h1标签..")
+        ])
+        // 更改的数据，且更改之后要重新渲染的数据放入到状态中
+        var DropDown = React.createClass({
+            getInitialState(){
+                return {
+                    isShow:true
+                }
+            },
+            toggle(){
+                //更改状态
+                this.setState({
+                    isShow:!this.state.isShow
+                })
+            },
+            renderContent(){
+                let {isShow} = this.state;
+                if(!isShow) return false; //如果为false 就不需要显示数据
+                return (
+                    <div><h1 id="h1">我是h1标签</h1></div>
+                )
+            },
+            render(){ //属性或者状态更改，render函数会重新执行
+                // let isShow = this.state.isShow;
+                //console.log("render!!")
+                let {isShow} = this.state;
+                return (
+                    <div>
+                        <p><button onClick={this.toggle}>DropDown</button></p>
+                        <ul className={isShow?"show":"hide"} ><li>111</li><li>222</li></ul>
+                        <ul style={{display:(isShow?"block":"none")}}><li>111</li><li>222</li></ul>
+                        {
+                           !isShow || React.createElement("div",{},["123",
+                                React.createElement("h1",{id:"h1"},"我是h1标签..")
+                            ])
+                        }
+                        {
+                           !isShow || <div><h1 id="h1">我是h1标签</h1></div>
+                        }
+                        {
+                            this.renderContent()
+                        }
+                    </div>
+                )
+            }
+        });
+
+        ReactDOM.render(<DropDown/>,app);
+
+        
+    </script>
+</body>
+
+</html>

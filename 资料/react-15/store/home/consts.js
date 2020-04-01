@@ -1,0 +1,2 @@
+const HOME_NAV_INFO = "HOME_NAV_INFO";
+export {HOME_NAV_INFO}

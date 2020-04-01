@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+
+<style>
+
+</style>
+
+<body>
+
+    <p> 组件可以通过getDefaultProps钩子函数来进行设置，
+        但是优先级不高，如果有父级组件传入相同属性的话会使用传入的属性</p>
+
+    <hr>
+
+    <div id="app"></div>
+
+    <script type="text/babel">
+        //通过getDefaultProps设置的默认属性优先级较低，
+        //会被外部传入的属性覆盖
+       
+        let Father = React.createClass({
+            render(){
+                return (
+                    <div>
+                        <p>我是Father组件..</p>    
+                        <hr/>
+                        <Son hairStyle={"小平头"}/>
+                    </div>
+                )
+            }
+        });
+        let Son = React.createClass({
+            //其实getDefaultProps() 就是一个生命周期钩子函数
+            getDefaultProps(){//组件可以通过getDefaultProps设置组件的默认属性，优先级较低
+                return {
+                    hairStyle:"杀马特"
+                }
+            },
+            render(){
+                return (
+                    <div>
+                        <p>我是Son组件..发型为：{this.props.hairStyle}</p>    
+                    </div>
+                )
+            }
+        });
+        ReactDOM.render(<Father/>,app);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,2 @@
+const math = require("./modules/math"); //koa2 express moogose http.createServer(req,res=>{}).listen(8080) fs.readFileSync url.parse.resolve.format  path.parse(url) querystring.parse(uname=admin&upwd=123) {unname:,uwd:}
+console.log(math(1,1))

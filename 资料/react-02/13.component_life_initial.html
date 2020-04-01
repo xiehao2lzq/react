@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app"></div>
+    <div id="app1"></div>
+
+    <script type="text/babel">
+
+        //组件的生命周期分为三个阶段：初始化、运行中、销毁
+        // 每个阶段都会有自己的钩子函数供我们在不同的情况下使用
+        //组件是一个构造器，当我们在使用组件的时候其实是在实例化组件，
+        //在这个时候组件就会经历生命周期
+
+        //vue中生命周期  初始化（breforeCreate created beforeMount render mounted）  运行中(beforeUpdate updated)   销毁(beforeDestroy destroyed)
+
+        //react生命周期钩子函数
+        //初始化 ： getDefaultProps getInitialState componentWillMount render componentDidMount
+        
+        var props_num = 0;
+        var states_num = 0;
+        var Hello = React.createClass({
+            //设置默认属性
+            //无论实例化多少次，只执行1次
+            //所有实例共享的，优先级低，性能高
+            getDefaultProps(){
+                console.log("执行了getDefaultProps。。。")
+                return {
+                    num:++props_num
+                }
+            },
+            //每一个组件的实例设置初始化状态
+            getInitialState(){
+                console.log("执行了getInitialState...");
+                return {
+                    num:++states_num
+                }
+            },
+            componentWillMount(){ //created+beforeMount的一个结合体
+                //在这个钩子函数里面，可以获取到属性与状态，并且可以更改状态
+                //更改状态不会影响运行时钩子函数的执行
+                //也是不能够获取真实dom结构的
+                //初始化事件 window.onscroll等   不建议在此钩子函数发送ajax,因为该钩子函数在新版本react中已经被废弃
+                //ssr 服务端渲染  严格规定 componetWillMount钩子函数不能被占用
+                //virtual dom ==> js内存数据  
+                console.log("componentWillMount",this.props.num,this.state.num,document.getElementById("box"))
+            },
+            render(){
+                console.log("render。。")
+                return (
+                    <div id="box">
+                        <p>props_num {this.props.num}</p>
+                        <p>states_num {this.state.num}</p>
+                    </div>
+                )
+            },
+            componentDidMount(){ //mounted
+                //可以操作真实dom结构
+                //可以实例化一些插件 
+                //在此钩子函数里面请求数据！
+                console.log("componentDidMount",document.getElementById("box"))
+            }
+        });
+
+        ReactDOM.render(<Hello/>,app)
+        // ReactDOM.render(<Hello/>,app1)
+    </script>
+</body>
+
+</html>

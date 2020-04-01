@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+<style>
+
+</style>
+
+<body>
+
+    <p>
+        react的事件对象
+    </p>
+
+    <div id="app"></div>
+
+    
+    <script type="text/babel">
+
+       var Hello = React.createClass({
+           clickme(type,e){
+               console.log(type,e.target,e.clientX)
+           },
+           render:function () {
+               return (
+                   <div>
+                      <button onClick={this.clickme.bind(this,"点击")}>click</button> 
+                   </div>
+               )
+           }
+       })
+        
+
+        ReactDOM.render(<Hello/>,app)
+
+        
+    //appaly call bind  原型  原型继承  call apply  Parent.call(this)
+    // function fn(){
+    //     console.log(this)
+    // }
+    // fn.call({a:10});
+    </script>
+</body>
+
+</html>

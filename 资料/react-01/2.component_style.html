@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+
+<style>
+  #big {
+      font-size: 3em;
+  }
+  *[data-red] { color: red; }
+
+  .bg-green {
+      background: green;
+  }
+</style>
+
+<body>
+    <p style="background: red;">样式：表达式{}里面写对象</p>
+
+    <div id="app"></div>
+
+    <script type="text/babel">
+        // react中表达式怎么写： {  }
+        // jsx中用class写成className
+        //style={{marginRight: spacing + 'em'}}
+        let Hello = React.createClass({ //基于class创建  16的版本
+            //配置项中配置的属性或者方法，实例当中使用的话需要通过this去使用
+            style:{
+                boxShadow:"13px 4px 40px #111",
+                fontSize:"42px"
+            },
+            render(){
+                return (
+                    <div>
+                        <p style={this.style} className="bg-green" data-red id="big">我是hello组件!!</p>    
+                    </div>
+                    
+                )
+            }
+        });
+        ReactDOM.render(<Hello/>,app)
+    </script>
+</body>
+
+</html>

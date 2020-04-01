@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+<style>
+
+</style>
+
+<body>
+
+    <div id="app">
+        
+        <!-- <div class="container">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    登录
+                    <p>欢迎二狗进来！<button class="btn btn-success">注销</button></p>
+                </div>
+                <div class="panel-body">
+                    <p>content....</p>
+                    <form action="#">
+                        <div class="form-group">
+                            <label>用户:</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>密码:</label>
+                            <input type="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default">登录</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/babel">
+        
+        var App = React.createClass({
+            getInitialState(){
+                return {
+                    userInfo:null
+                }
+            },
+            changeUserInfo(userInfo){
+                this.setState({
+                    userInfo
+                });
+            },
+            render(){
+                return (
+                    <div className="container">
+                        <div className="panel panel-primary">
+                            <Header changeUserInfo={this.changeUserInfo} userInfo={this.state.userInfo}/>
+                            <Body changeUserInfo={this.changeUserInfo} userInfo={this.state.userInfo}/>
+                        </div>
+                    </div>
+                )
+            }
+        });
+
+
+        var Header = React.createClass({
+            render(){
+                return (
+                    <div className="panel-heading">
+                        {
+                            this.props.userInfo?<p>欢迎{this.props.userInfo.username}进来！<button className="btn btn-success" onClick={this.props.changeUserInfo.bind(this,null)}>注销</button></p> : "登录"
+                        }
+                    </div>
+                )
+            }
+        })
+        
+        var Body = React.createClass({
+            render(){
+                return (
+                    <div className="panel-body">
+                        {
+                            this.props.userInfo?<Content/>: <LoginForm changeUserInfo={this.props.changeUserInfo}/>
+                        }
+                    </div>
+                )
+            }
+        })
+
+        var Content = React.createClass({
+            render(){
+                return (
+                    <p>content....</p>
+                )
+            }
+        })
+
+        //非受控组件
+        //输入框的内容发生了变化，直接通过ref进行标记，直接获取即可
+        //由 DOM 处理
+        var LoginForm = React.createClass({
+            
+            
+            login(e){
+                e.preventDefault();//阻止表单默认提交行为
+                let username = this.username.value;
+                let password = this.password.value;
+                setTimeout(() => {
+                    if(username==="123" && password==="456"){
+                        this.props.changeUserInfo({
+                            username:"二狗子"
+                        })
+                    }else{
+                        alert("登录失败！");
+                    }
+                }, 500);
+            },
+            render(){
+                return (
+                    <form action="#" onSubmit={this.login}>
+                        <div className="form-group">
+                            <label>用户:</label>
+                            <input ref={el=>this.username=el}  type="text" className="form-control"/>
+                        </div>
+                        <div className="form-group">
+                            <label>密码:</label>
+                            <input  ref={el=>this.password=el} type="password" className="form-control"/>
+                        </div>
+                        <div className="form-group">
+                            <button type="submit" className="btn btn-default">登录</button>
+                        </div>
+                    </form>
+                )
+            }
+        })
+
+
+
+        //受控组件 输入框的内容发生变化后，使其更改组件的状态，使用数据的时候直接从状态里面取即可
+        //在受控组件中，表单数据由React组件进行处理
+        //受控组件==>受到数据的控制  react思想
+        // var LoginForm = React.createClass({
+        //     getInitialState(){
+        //         return {
+        //             username:"",
+        //             password:""
+        //         }
+        //     },
+        //     changeHandler(type,e){
+        //         type==="username"?
+        //             this.setState({username:e.target.value}):
+        //             this.setState({password:e.target.value})
+        //     },
+        //     login(e){
+        //         e.preventDefault();//阻止表单默认提交行为
+        //         console.log(this.state.username,this.state.password);
+        //     },
+        //     render(){
+        //         return (
+        //             <form action="#" onSubmit={this.login}>
+        //                 <div className="form-group">
+        //                     <label>用户:</label>
+        //                     <input onChange={this.changeHandler.bind(this,"username")} type="text" className="form-control"/>
+        //                 </div>
+        //                 <div className="form-group">
+        //                     <label>密码:</label>
+        //                     <input onChange={this.changeHandler.bind(this,"password")} type="password" className="form-control"/>
+        //                 </div>
+        //                 <div className="form-group">
+        //                     <button type="submit" className="btn btn-default">登录</button>
+        //                 </div>
+        //             </form>
+        //         )
+        //     }
+        // })
+
+
+
+
+        
+       ReactDOM.render(<App/>,app);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./base/react.min.js"></script>
+    <script src="./base/react-dom.min.js"></script>
+    <script src="./base/browser.min.js"></script>
+</head>
+
+<style>
+
+</style>
+
+<body>
+
+    <p> 子组件的属性也要由父组件设置...</p>
+    <hr>
+    <div id="app"></div>
+
+    <script type="text/babel">
+    // 可以让父组件给子组件传递属性
+    let Father = React.createClass({
+        render(){
+            return (
+                <div>
+                    <p>Father。。{this.props.name}</p> 
+                    <hr/>
+                    <Son sex="男"/>   
+                </div>
+            )
+        }
+    })
+
+    let Son = React.createClass({
+        render(){
+            return (
+                <div>
+                    <p>Son {this.props.sex}</p>    
+                </div>
+            )
+        }
+    })
+    ReactDOM.render(<Father name="张三丰"/>,app)
+    </script>
+</body>
+
+</html>
