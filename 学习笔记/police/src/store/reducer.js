@@ -1,6 +1,8 @@
 import {combineReducers} from "redux"
-import home from "./home/reducer"
+import community from "./community/reducer"
+import login from "./login/reducer"
 const reducer = combineReducers({
-    home
+    community,
+    login
 });
 export default reducer;

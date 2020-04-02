@@ -1,12 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './serviceWorker'
+
+//引入样式文件
+import "./stylesheets/main.scss"
+//引入Provider，从顶层提供数据，单项数据流
 import {Provider} from "react-redux"
+//引入 HashRouter
+import {HashRouter as Router} from "react-router-dom"
 import store from "./store"
 ReactDOM.render(
    <Provider store={store}>
-      <App />
+      <Router>
+         <App />
+      </Router>
    </Provider>,
   document.getElementById('root')
 );
