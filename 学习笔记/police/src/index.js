@@ -10,6 +10,9 @@ import {Provider} from "react-redux"
 //引入 HashRouter
 import {HashRouter as Router} from "react-router-dom"
 import store from "./store"
+import axios from "axios"
+//默认格式
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 ReactDOM.render(
    <Provider store={store}>
       <Router>
