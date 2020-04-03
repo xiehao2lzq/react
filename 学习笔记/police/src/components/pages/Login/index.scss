@@ -1,0 +1,23 @@
+.login {
+    background-size: cover;
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+}
+
+.loginBox {
+    width: 610px;
+    height: 477px;
+    background: rgba(2, 13, 55, 0.35);
+    border-radius: 20px;
+    position: absolute;
+    top:100px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    .formBox{
+        width: 350px;
+        margin:80px auto 0;
+    }
+}
