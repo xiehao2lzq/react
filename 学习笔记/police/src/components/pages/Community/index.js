@@ -4,6 +4,9 @@ import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import actionCreators from "../../../store/community/actionCreators"
 export class Community extends Component {
+    componentWillMount(){
+        console.log(1123)
+    }
     render() {
         return (
             <div>

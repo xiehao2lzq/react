@@ -8,7 +8,6 @@ import {BigData,
   Monitoring} from "./components/pages"
   import {Route,Switch,withRouter} from "react-router-dom"
  class App extends Component {
-  
   renderRoute(){
     let {routers} = this.props;
     return(
@@ -37,7 +36,7 @@ App.defaultProps = {
     {id:2,path:"/community",component:Community},
     {id:3,path:"/dealData",component:DealData},
     {id:4,path:"/monitoring",component:Monitoring},
-    {id:5,path:"/bigData",cpmponent:BigData}
+    {id:5,path:"/bigData",component:BigData}
   ]
 }
 export default withRouter(App);

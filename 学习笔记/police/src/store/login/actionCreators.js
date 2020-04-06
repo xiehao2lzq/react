@@ -1,20 +1,21 @@
 import {Login} from "./const"
 import axios from "../../axios"
 export default{
-    login(params){
+    login(params,success,error){
         return dispatch=>{
             axios({
                 method:"POST",
                 url:"/plat/login",
                 data:params
             }).then(res=>{
-                var loginInfo = null
                 if(res.code==="0100"){
-                    loginInfo = {...res.data,status:true,msg:res.msg}
+                    let loginInfo = res.data
+                    success&&success(res.msg)
+                    dispatch({type:Login,loginInfo})
                 }else{
-                    loginInfo = {status:false,msg:res.msg}
+                    error&&error(res.msg)
                 }
-                dispatch({type:Login,loginInfo})
+                
             })
         }
     }
